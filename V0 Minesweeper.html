@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="website icon" type="png" href="WebsiteIcon-2.png">
+    <title>GameSpot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #f5f5f5;
+            --secondary-bg: #ffffff;
+            --text-color: #333333;
+            --accent-color: #4caf50;
+            --button-bg: #9e9e9e;
+            --button-hover: #7d7d7d;
+            --button-text: #ffffff;
+            --header-bg: #333333;
+            --header-text: #ffffff;
+            --counter-bg: #f0f0f0;
+            --counter-border: #dddddd;
+            --counter-text: #333333;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --game-border: #bbbbbb;
+        }
+
+        .dark-mode {
+            --primary-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --text-color: #f5f5f5;
+            --accent-color: #66bb6a;
+            --button-bg: #424242;
+            --button-hover: #616161;
+            --button-text: #f5f5f5;
+            --header-bg: #1e1e1e;
+            --header-text: #f5f5f5;
+            --counter-bg: #2d2d2d;
+            --counter-border: #444444;
+            --counter-text: #f5f5f5;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --game-border: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            position:fixed;
+            width: 100%;
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #ff0000;
+        }
+
+        .home-link {
+            color: var(--header-text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .home-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .pCounter {
+            background-color: var(--counter-bg);
+            border: 2px solid var(--counter-border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .pCounter h1 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--counter-text);
+        }
+
+        .points {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .mines {
+            display: grid;
+            grid-template-rows: repeat(8, 50px);
+            grid-template-columns: repeat(8, 50px);
+            gap: 8px;
+            border: 8px solid var(--game-border);
+            border-radius: 8px;
+            padding: 12px;
+            background-color: var(--game-border);
+            box-shadow: inset 0 0 10px var(--shadow-color);
+        }
+
+        .Allbutton {
+            height: 50px;
+            width: 50px;
+            background-color: var(--button-bg);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--button-text);
+            font-weight: bold;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .Allbutton:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .Allbutton:active {
+            transform: translateY(0);
+        }
+
+        #T {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            transition: all 0.3s;
+        }
+
+        #T:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px var(--shadow-color);
+        }
+
+        .game-info {
+            margin-top: 1.5rem;
+            text-align: center;
+            max-width: 500px;
+            line-height: 1.6;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 1.5rem;
+            }
+            
+            .mines {
+                grid-template-rows: repeat(8, 40px);
+                grid-template-columns: repeat(8, 40px);
+                gap: 6px;
+            }
+            
+            .Allbutton {
+                height: 40px;
+                width: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mines {
+                grid-template-rows: repeat(8, 35px);
+                grid-template-columns: repeat(8, 35px);
+                gap: 4px;
+            }
+            
+            .Allbutton {
+                height: 35px;
+                width: 35px;
+            }
+            
+            .game-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bbody dark-mode">
+   
+      
+    <header>
+        <div class="logo">Game<span>S</span>pot</div>
+        <a href="index.html" class="home-link">
+            <i class="fas fa-home"></i>
+        </a>
+        
+    </header> 
+    
+        <a href="homepage.html" style="
+          position: fixed;
+          left:5px;
+          top:100px;
+          
+          margin-left:0px;
+          padding: 10px 20px;
+          background-color: var(--accent-color);
+          color: white;
+          text-decoration: none;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+          font-weight: bold;
+        ">
+          ← Back
+        </a>
+      
+    <div class="main-content" style="display: flex; gap: 2rem; align-items: flex-start;">
+        <div class="instructions" style="
+        max-width: 320px;
+        background-color: var(--secondary-bg);
+        padding: 1.5rem 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px var(--shadow-color);
+        line-height: 1.8;
+        font-size: 1.1rem;
+        margin-left: 2rem; /* This adds space from the left side of the page */
+    ">
+                <h2 style="margin-bottom: 0.5rem; color: var(--accent-color);">How to Play</h2>
+            <ul style="padding-left: 1.2rem;">
+                <li>Click tiles to reveal them.</li>
+                <li>Numbers add points to your score.</li>
+                <li>Avoid hidden mines — they end the game!</li>
+                <li>You have 10 mines total.</li>
+                <li>Click "Try Again?" to restart.</li>
+            </ul>
+        </div>
+    
+        <div class="game-container">
+            <!-- keep the rest of your game code as is here -->
+    
+    <div class="game-container">
+        <div class="game-header">
+            <div class="game-title">Minesweeper Challenge</div>
+            <div class="pCounter">
+                <h1>Points Counter</h1>
+                <p class="points">0</p>
+            </div>
+        </div>
+
+        <div class="mines">
+            <button class="Allbutton" id="1"></button>
+            <button class="Allbutton" id="2"></button>
+            <button class="Allbutton" id="3"></button>
+            <button class="Allbutton" id="4"></button>
+            <button class="Allbutton" id="5"></button>
+            <button class="Allbutton" id="6"></button>
+            <button class="Allbutton" id="7"></button>
+            <button class="Allbutton" id="8"></button>
+            <button class="Allbutton" id="9"></button>
+            <button class="Allbutton" id="10"></button>
+            <button class="Allbutton" id="11"></button>
+            <button class="Allbutton" id="12"></button>
+            <button class="Allbutton" id="13"></button>
+            <button class="Allbutton" id="14"></button>
+            <button class="Allbutton" id="15"></button>
+            <button class="Allbutton" id="16"></button>
+            <button class="Allbutton" id="17"></button>
+            <button class="Allbutton" id="18"></button>
+            <button class="Allbutton" id="19"></button>
+            <button class="Allbutton" id="20"></button>
+            <button class="Allbutton" id="21"></button>
+            <button class="Allbutton" id="22"></button>
+            <button class="Allbutton" id="23"></button>
+            <button class="Allbutton" id="24"></button>
+            <button class="Allbutton" id="25"></button>
+            <button class="Allbutton" id="26"></button>
+            <button class="Allbutton" id="27"></button>
+            <button class="Allbutton" id="28"></button>
+            <button class="Allbutton" id="29"></button>
+            <button class="Allbutton" id="30"></button>
+            <button class="Allbutton" id="31"></button>
+            <button class="Allbutton" id="32"></button>
+            <button class="Allbutton" id="33"></button>
+            <button class="Allbutton" id="34"></button>
+            <button class="Allbutton" id="35"></button>
+            <button class="Allbutton" id="36"></button>
+            <button class="Allbutton" id="37"></button>
+            <button class="Allbutton" id="38"></button>
+            <button class="Allbutton" id="39"></button>
+            <button class="Allbutton" id="40"></button>
+            <button class="Allbutton" id="41"></button>
+            <button class="Allbutton" id="42"></button>
+            <button class="Allbutton" id="43"></button>
+            <button class="Allbutton" id="44"></button>
+            <button class="Allbutton" id="45"></button>
+            <button class="Allbutton" id="46"></button>
+            <button class="Allbutton" id="47"></button>
+            <button class="Allbutton" id="48"></button>
+            <button class="Allbutton" id="49"></button>
+            <button class="Allbutton" id="50"></button>
+            <button class="Allbutton" id="51"></button>
+            <button class="Allbutton" id="52"></button>
+            <button class="Allbutton" id="53"></button>
+            <button class="Allbutton" id="54"></button>
+            <button class="Allbutton" id="55"></button>
+            <button class="Allbutton" id="56"></button>
+            <button class="Allbutton" id="57"></button>
+            <button class="Allbutton" id="58"></button>
+            <button class="Allbutton" id="59"></button>
+            <button class="Allbutton" id="60"></button>
+            <button class="Allbutton" id="61"></button>
+            <button class="Allbutton" id="62"></button>
+            <button class="Allbutton" id="63"></button>
+            <button class="Allbutton" id="64"></button>
+        </div>
+
+       
+    </div>
+
+    <script>
+
+const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to play the game.');
+        window.location.href = 'login.html'; // Redirect to the login page
+    }
+    let allbuttons = document.querySelectorAll(".Allbutton");
+    let minesBox = document.querySelector(".mines");
+    let body = document.querySelector(".bbody");
+    let scoresound = new Audio("clicksound.mp3");
+    let losesound = new Audio("bomb.mp3");
+    let tryagainsound = new Audio("click.mp3");
+    let minecount = 0;
+    let maxmine = 10;
+    let pointsCounter = document.querySelector(".points");
+    let lost = 0;
+    let points = 0;
+
+    function resetGame() {
+        allbuttons.forEach(button => {
+            button.innerText = "";
+            button.style.backgroundColor = "";
+            button.setAttribute("id", button.originalId);
+        });
+        lost = 0;
+        points = 0;
+        minecount = 0;
+        pointsCounter.innerText = points;
+        let btn = document.querySelector("#T");
+        btn.remove();
+    }
+
+    allbuttons.forEach(button => {
+        button.originalId = button.id;
+
+        button.onclick = () => {
+            if (lost == 0) {
+                let selectedButton = button;
+                let arr = [1, 2, 3];
+                let arr_2 = ["blue", "green", "orange"];
+                let v = Math.random();
+                let remainingButtons = 64 - points - minecount;
+                let dynamicProbability = (maxmine - minecount) / remainingButtons;
+                let choose = Math.floor(Math.random() * 3);
+
+                if (v < dynamicProbability && minecount < maxmine) {
+                    losesound.play();
+                    lost = 1;
+                    selectedButton.style.backgroundColor = "red";
+                    selectedButton.innerText = "💣";
+                    selectedButton.style.fontWeight = "bolder";
+                    selectedButton.style.fontSize = "30px";
+                    minecount++;
+                    let mineButtons = [...allbuttons].filter(btn => btn.dataset.mine === "true");
+                    let revealed = new Set(); 
+
+                    for (let i = 0; i < Math.min(maxmine, mineButtons.length);) {
+                        let R = Math.floor(Math.random() * mineButtons.length);
+                        let btn = mineButtons[R];
+
+                        if (!revealed.has(btn)) {
+                            revealed.add(btn);
+                            if (btn.innerText === "") {
+                                btn.innerText = "💣";
+                                btn.style.backgroundColor = "red";
+                                btn.style.fontWeight = "bolder";
+                                btn.style.fontSize = "25px";
+                            }
+                            i++; 
+                        }
+                    }
+                    let newBtn = document.createElement("button");
+                    newBtn.innerText = "Try Again ?";
+                    newBtn.setAttribute("id", "T");
+                    document.querySelector(".game-container").appendChild(newBtn);
+
+                    newBtn.onclick = () => {
+                        tryagainsound.play();
+                        resetGame();
+                    }
+                } else {
+                    scoresound.play();
+                    selectedButton.innerText = arr[choose];
+                    selectedButton.style.backgroundColor = arr_2[choose];
+                    selectedButton.style.fontWeight = "bolder";
+                    selectedButton.style.fontSize = "30px";
+                    selectedButton.removeAttribute("id");
+                    points += arr[choose];
+                    pointsCounter.innerText = points;
+                    selectedButton.dataset.mine = "true";
+                }
+            }
+        };
+    });
+
+    // Set dark mode as default
+    document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

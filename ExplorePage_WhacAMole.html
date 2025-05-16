@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="website icon" type="png" href="WebsiteIcon-2.png">
+    <title>GameSpot</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            /* background-color: black; */
+        }
+        .navbar{
+            position: fixed;
+            top: 0px;
+            color: white;
+            background-color: #2e2e2e;
+            height: 73px;
+            width: 100%;
+            font-size: 33px;
+        }
+        .logo{
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-weight: bolder;
+        }
+        .slider {
+            width: 100%;
+            margin: 0px auto; /* Add margin to avoid overlap with navbar */
+            overflow: hidden;           
+            position: fixed;
+            top: 70px;
+            height: 900px; /* Set a specific height for the slider */
+        }
+        .slider-container {
+            display: flex;
+            transition: transform 1s ease;
+            height: 100%; /* Ensure the container takes the full height */
+            
+        }
+        .slide {
+            min-width: 100%;
+            height: 50%; /* Ensure the slide takes the full height */
+            background-size: cover; /* Cover the entire area */
+            background-position: center; /* Center the background */
+            background-color: #1e1e1e;
+        }
+        .txt{
+            position: absolute;
+            top: 520.2px;
+            background-color: #1e1e1e;
+            color:antiquewhite;
+            font-size: x-large;
+            bottom: 0;
+        }
+        .detail{
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .back-btn-container {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.back-btn {
+    background-color: white;
+    color: #333;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: 2px solid #4caf50;
+    display: inline-block;
+    margin-left: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.back-btn:hover {
+    background-color: #4caf50;
+    color: white;
+}
+
+        .button{
+            position:fixed;
+            bottom: 20px;
+            left: 580px;
+            border: 1px solid orange; 
+            border-radius: 15px;
+            width: 20%;
+            background-color: #4e4e4e;
+        }
+        a{
+            text-decoration: none;
+            color: orange;
+            margin-left: 90px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <p class="logo">Game<font color="red">S</font>pot</p>
+    </div>
+    <div class="thumbnail">
+        <div class="slider">
+            <div class="slider-container" id="slider-container">
+                <div class="slide" style="background-image: url('minesweeper_whac_a_mole_rock_paper\ \(1\).jpeg'); background-size: cover; background-position: cover; background-repeat: no-repeat;"></div>
+                <div class="slide" style="background-image: url('Screenshot\ 2025-04-16\ 015614.png'); background-size: contain; background-position: center; background-repeat: no-repeat;"></div>
+                <div class="slide" style="background-image: url('whacthumbnail.png'); background-size: contain; background-position: center; background-repeat: no-repeat;"></div>
+            </div>
+    </div>
+    <div class="txt">
+        <p class="detail"><font color="red">Whac-A-Mole</font>is a classic arcade game where players use a mallet to hit mechanical moles that pop up randomly from holes. Fast reflexes and hand-eye coordination are key, as the goal is to hit as many moles as possible before time runs out. Originally created in Japan in the 1970s, the game quickly gained popularity worldwide and became a staple at carnivals, arcades, and amusement parks. Its simple, frantic gameplay makes it addictive and fun for all ages. Over time, digital and themed versions have emerged, but the core appeal remains the same: smack the mole, score points, and repeat!</p>
+        <div class="back-btn-container">
+            <a href="javascript:history.back()" class="back-btn">Back</a>
+        </div>
+        <div class="button">
+            <a href="V0 WhacAMole.html">▶ Play Now</a>
+        </div>
+    </div>
+</body>
+<script>
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.slider-container .slide');
+        const sliderContainer = document.getElementById('slider-container');
+        if (index >= slides.length) {
+            currentIndex = 0;
+        } else if (index < 0) {
+            currentIndex = slides.length - 1;
+        }
+        sliderContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    function nextSlide() {
+        currentIndex++;
+        showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+        currentIndex--;
+        showSlide(currentIndex);
+    }
+
+    // Auto-slide every 5 seconds
+    setInterval(nextSlide, 5000);
+</script>
+</html>

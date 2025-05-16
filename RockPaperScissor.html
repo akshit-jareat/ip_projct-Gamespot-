@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #f5f5f5;
+            --secondary-bg: #ffffff;
+            --text-color: #333333;
+            --accent-color: darkslateblue;
+            --button-bg: peru;
+            --button-hover: cornsilk;
+            --button-text: #000000;
+            --header-bg: #333333;
+            --header-text: #ffffff;
+            --score-bg: #f0f0f0;
+            --score-border: #dddddd;
+            --score-text: #333333;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --game-border: #ffffff;
+        }
+
+        .dark-mode {
+            --primary-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --text-color: #f5f5f5;
+            --accent-color: #6a5acd;
+            --button-bg: #a0522d;
+            --button-hover: #fff8dc;
+            --button-text: #000000;
+            --header-bg: #1e1e1e;
+            --header-text: #ffe4c4;
+            --score-bg: #2d2d2d;
+            --score-border: #444444;
+            --score-text: #f5f5f5;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --game-border: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #ff0000;
+        }
+
+        .home-link {
+            color: var(--header-text);
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .home-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        #main {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .choices {
+            border: 2px solid var(--button-bg);
+            border-radius: 50%;
+            padding: 2.5rem;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+        }
+
+        .choices:hover {
+            opacity: 0.8;
+            background-color: var(--button-hover);
+            transform: scale(1.1);
+        }
+
+        .score-container,
+        .tries-container,
+        .comp-choice-container,
+        .message-container,
+        .result-container {
+            background-color: var(--score-bg);
+            border: 1px solid var(--score-border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .score-container p,
+        .tries-container p,
+        .comp-choice-container p,
+        .message-container h1,
+        .result-container p {
+            font-size: 1.2rem;
+            color: var(--score-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .score-container span,
+        .tries-container span,
+        .comp-choice-container span {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .message-container h1 {
+            color: deeppink;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .result-container p {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        #try-again-btn {
+            display: none;
+            margin: 2rem auto;
+            padding: 0.8rem 2rem;
+            background-color: #4caf50;
+            color: white;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        #try-again-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px var(--shadow-color);
+        }
+    </style>
+</head>
+
+<body id="bbody">
+    <header>
+        <div class="logo">Game<span>S</span>pot</div>
+        <a href="MainPage.html" class="home-link">
+            <i class="fas fa-home"></i>
+        </a>
+    </header>
+
+    <div class="main-content" style="display: flex; justify-content: center; align-items: flex-start; gap: 2rem; padding: 0 2rem;">
+        <div class="instructions" style="flex: 1; background-color: var(--secondary-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 8px 24px var(--shadow-color);">
+            <button onclick="history.back()" style="margin-bottom: 1rem; padding: 0.5rem 1rem; background-color: peru; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                ← Back
+            </button>
+            
+            <h2 style="margin-bottom: 1rem; color: var(--accent-color);">How to Play</h2>
+            <ul style="list-style: disc; padding-left: 1.5rem; font-size: 1.1rem; color: var(--text-color);">
+                <li>Choose Rock, Paper, or Scissors by clicking an icon.</li>
+                <li>Computer will randomly choose its move.</li>
+                <li>Rock beats Scissors, Scissors beats Paper, and Paper beats Rock.</li>
+                <li>The one with the higher score after all tries wins.</li>
+                <li>You can replay the game using the "Try Again" button.</li>
+            </ul>
+        </div>
+    
+
+<div class="game-container" style="flex: 1; transform: scale(0.85); transform-origin: top left;">
+    
+
+            <div id="main">
+                <img src="https://img.icons8.com/ios-filled/100/000000/rock.png" class="choices" id="rock" alt="rock" />
+                <img src="https://img.icons8.com/ios-filled/100/000000/paper.png" class="choices" id="paper" alt="paper" />
+                <img src="https://img.icons8.com/ios-filled/100/000000/scissors.png" class="choices" id="scissors" alt="scissors" />
+            </div>
+    
+            <div class="score-container">
+                <p>User Score: <span class="user_score">0</span></p>
+                <p>Computer Score: <span class="comp_user">0</span></p>
+            </div>
+    
+            <div class="tries-container">
+                <p>Number of Tries: <span class="Number_of_tries">0</span></p>
+            </div>
+    
+            <div class="comp-choice-container">
+                <p>Computer's Choice: <span class="t">-</span></p>
+            </div>
+    
+            <div class="message-container">
+                <h1>Play Your Move!</h1>
+            </div>
+    
+            <div class="result-container">
+                <p class="result"></p>
+            </div>
+    
+            <button id="try-again-btn">Try Again?</button>
+        </div>
+    </div>
+    
+
+    <script>
+
+const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to play the game.');
+        window.location.href = 'login.html'; // Redirect to the login page
+    }
+        let totalTries = parseInt(prompt("How many tries do you want to play?"));
+        while (isNaN(totalTries) || totalTries < 1) {
+            window.location.href='EcplorePage_RockPaperScissor.html';
+        }
+
+        const userScoreDisplay = document.querySelector(".user_score");
+        const compScoreDisplay = document.querySelector(".comp_user");
+        const triesDisplay = document.querySelector(".Number_of_tries");
+        const compChoiceDisplay = document.querySelector(".t");
+        const msgDisplay = document.querySelector(".message-container h1");
+        const resultDisplay = document.querySelector(".result");
+        const tryAgainBtn = document.getElementById("try-again-btn");
+
+        const choices = document.querySelectorAll(".choices");
+        const compOptions = ["rock", "paper", "scissors"];
+
+        let userScore = 0;
+        let compScore = 0;
+        let tries = 0;
+
+        function genCompChoice() {
+            const idx = Math.floor(Math.random() * 3);
+            return compOptions[idx];
+        }
+
+        function endGame() {
+            choices.forEach(choice => choice.style.pointerEvents = "none");
+            if (userScore > compScore) {
+                resultDisplay.innerText = "🎉 You Won the Game!";
+                resultDisplay.style.color = "green";
+            } else if (userScore < compScore) {
+                resultDisplay.innerText = "😢 You Lost the Game!";
+                resultDisplay.style.color = "red";
+            } else {
+                resultDisplay.innerText = "😐 It's a Tie!";
+                resultDisplay.style.color = "orange";
+            }
+            tryAgainBtn.style.display = "block";
+        }
+
+        function resetGame() {
+            location.reload();
+        }
+
+        tryAgainBtn.addEventListener("click", resetGame);
+
+        function playRound(userChoice) {
+            if (tries >= totalTries) return;
+
+            const compChoice = genCompChoice();
+            compChoiceDisplay.innerText = compChoice;
+            compChoiceDisplay.style.color = "white";
+            tries++;
+            triesDisplay.innerText = tries;
+
+            if (userChoice === compChoice) {
+                msgDisplay.innerText = "It's a Tie!";
+                msgDisplay.style.color = "orange";
+            } else if (
+                (userChoice === "rock" && compChoice === "scissors") ||
+                (userChoice === "paper" && compChoice === "rock") ||
+                (userChoice === "scissors" && compChoice === "paper")
+            ) {
+                msgDisplay.innerText = "You Won!";
+                msgDisplay.style.color = "green";
+                userScore++;
+                userScoreDisplay.innerText = userScore;
+            } else {
+                msgDisplay.innerText = "Computer Won!";
+                msgDisplay.style.color = "red";
+                compScore++;
+                compScoreDisplay.innerText = compScore;
+            }
+
+            if (tries === totalTries) {
+                endGame();
+            }
+        }
+
+        choices.forEach(choice => {
+            choice.addEventListener("click", () => {
+                playRound(choice.id);
+            });
+        });
+
+        // Set default dark mode
+        document.body.classList.add('dark-mode');
+    </script>
+</body>
+
+</html>

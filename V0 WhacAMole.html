@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="website icon" type="png" href="WebsiteIcon-2.png">
+    <title>GameSpot</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-bg: #f5f5f5;
+      --secondary-bg: #e0e0e0;
+      --text-color: #333;
+      --accent-color: #4caf50;
+      --mole-hole-color: #8B4513;
+      --mole-hole-shadow: rgba(53, 21, 6, 0.7);
+      --header-bg: #333;
+      --header-text: #fff;
+      --score-bg: #ff5722;
+      --score-text: #fff;
+    }
+
+    .dark-mode {
+      --primary-bg: #121212;
+      --secondary-bg: #1e1e1e;
+      --text-color: #f5f5f5;
+      --accent-color: #66bb6a;
+      --mole-hole-color: #5D4037;
+      --mole-hole-shadow: rgba(20, 10, 0, 0.8);
+      --header-bg: #1e1e1e;
+      --header-text: #f5f5f5;
+      --score-bg: #d84315;
+      --score-text: #fff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+/* Update the body to a flex layout */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 0;  /* Remove extra padding around the body */
+  margin-top: 0; /* Remove any margin that might be adding space from the top */
+}
+
+
+/* Style for instruction box */
+.instruction-box {
+  position: fixed;
+  top:70px;
+  left:8px;
+  background-color: var(--accent-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 30%;
+  margin-top: 4rem; /* Adjust this value to create more space between the navbar and instructions */
+  height: auto;
+}
+
+
+
+
+.instruction-box h2 {
+   font-size: 1.5rem;
+   color: #fff;
+   margin-bottom: 1rem;
+}
+
+.instruction-box p {
+   color: #fff;
+   font-size: 1.1rem;
+}
+
+
+header {
+  position: fixed;
+  width: 100%;
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 0; /* Remove any margin below the navbar */
+  z-index: 10; /* Ensure it stays above other elements */
+}
+.back-btn {
+  position: fixed;
+  top: 80px; /* Space from the top */
+  left: 10px; /* Space from the left side */
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+
+.back-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #ff0000;
+    }
+
+    .home-link {
+      color: var(--header-text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .home-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+/* Style for game container */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%; /* Adjust the game container width */
+  max-width: 800px;
+  padding: 1rem;
+}
+
+
+    .score-display {
+      background-color: var(--score-bg);
+      color: var(--score-text);
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .board {
+      background-color: var(--accent-color);
+      border-radius: 15px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      max-width: 100%;
+    }
+
+    .row {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .circle {
+      height: 90px;
+      width: 90px;
+      border-radius: 50%;
+      background-color: var(--mole-hole-color);
+      box-shadow: inset 0 10px 0 7px var(--mole-hole-shadow);
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .circle:hover {
+      transform: scale(1.05);
+    }
+
+    .circle:active {
+      transform: scale(0.95);
+    }
+
+    .cursor {
+      height: 110px;
+      width: 100px;
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      background-image: url("Hammer.png");
+      background-size: 100% 100%;
+      transform: translate(-20%, -20%);
+      transition: transform 0.1s;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .cursor.active {
+      transform: translate(-20%, -20%) scale(0.9);
+    }
+
+    .try-again-btn {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s;
+    }
+
+    .try-again-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .board {
+        padding: 1rem;
+        gap: 1rem;
+      }
+      
+      .row {
+        gap: 1rem;
+      }
+      
+      .circle {
+        height: 70px;
+        width: 70px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .circle {
+        height: 60px;
+        width: 60px;
+      }
+    }
+  </style>
+</head>
+<body class="bbody dark-mode"> 
+ 
+ 
+  <header>
+    <div class="logo">Game<span>S</span>pot</div>
+    <a href="MainPage.html" class="home-link">
+      <i class="fas fa-home"></i>
+    </a>
+  </header>
+  <button class="back-btn">Back</button></a>
+
+  <div class="instruction-box">
+    <h2>Instructions for Whac-A-Mole</h2>
+    <ul>
+      <li>Welcome to Whac-A-Mole! Here's how to play:</li>
+      <li>Click on the moles when they pop up from their holes.</li>
+      <li>You earn points by hitting the moles before they disappear.</li>
+      <li>Be quick! The moles don't stay up for long!</li>
+      <li>Try to hit as many moles as possible to get the highest score!</li>
+    </ul>
+  </div>
+  
+
+  <div class="game-container">
+    <div class="score-display">
+      <i class="fas fa-star"></i>
+      Score: <span class="pointscounter">0</span>
+    </div>
+
+    <div class="board">
+      <div class="row">
+        <button class="circle" id="1"></button>
+        <button class="circle" id="2"></button>
+        <button class="circle" id="3"></button>
+      </div>
+      <div class="row">
+        <button class="circle" id="4"></button>
+        <button class="circle" id="5"></button>
+        <button class="circle" id="6"></button>
+      </div>
+      <div class="row">
+        <button class="circle" id="7"></button>
+        <button class="circle" id="8"></button>
+        <button class="circle" id="9"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cursor"></div>
+
+  <script>
+
+const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to play the game.');
+        window.location.href = 'login.html'; // Redirect to the login page
+    }
+ let tryy = 0;
+let points = 0;
+let currentMoleId = null;
+let gameInterval;
+let newBtn;
+
+const body = document.querySelector(".bbody");
+const cursor = document.querySelector(".cursor");
+const Allcircle = document.querySelectorAll(".circle");
+const pointsCounter = document.querySelector(".pointscounter");
+
+// Move hammer with mouse
+window.addEventListener('mousemove', e => {
+  cursor.style.top = e.pageY + 'px';
+  cursor.style.left = e.pageX + 'px';
+});
+
+window.addEventListener('mousedown', () => {
+  cursor.classList.add('active');
+});
+
+window.addEventListener('mouseup', () => {
+  cursor.classList.remove('active');
+});
+
+function resetGame() {
+  tryy = 0;
+  points = 0;
+  currentMoleId = null;
+  pointsCounter.innerText = points;
+ newBtn.remove();
+
+  Allcircle.forEach(c => c.style.backgroundImage = "");
+
+  gameInterval = setInterval(molekaAana, 3000);
+}
+
+function molekaAana() {
+  if (tryy >= 20) {
+    clearInterval(gameInterval);
+    alert("Game Over! Final Score: " + points);
+
+    newBtn = document.createElement("button");
+    newBtn.innerText = "Try Again ?";
+    newBtn.classList.add("try-again-btn");
+    body.querySelector(".game-container").appendChild(newBtn);
+    newBtn.setAttribute("id", "T");
+    newBtn.onclick = () => {
+      resetGame();
+    };
+
+    
+    return;
+  }
+
+  if (currentMoleId) {
+    document.getElementById(currentMoleId).style.backgroundImage = "";
+  }
+
+  let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  let choose = Math.floor(Math.random() * 9);
+  currentMoleId = arr[choose];
+  let choosencircle = document.getElementById(currentMoleId);
+  choosencircle.style.backgroundImage = "url('mole.jpeg')";
+  choosencircle.style.backgroundSize = "100% 100%";
+
+  tryy++;
+}
+
+Allcircle.forEach(button => {
+  button.onclick = () => {
+    if (button.id == currentMoleId) {
+      points++;
+      pointsCounter.innerText = points;
+      button.style.backgroundImage = "";
+      currentMoleId = null;
+    }
+  };
+});
+
+// Back button functionality
+document.querySelector('.back-btn').addEventListener('click', () => {
+  history.back();
+});
+
+gameInterval = setInterval(molekaAana, 600);
+</script>
+</body>
+</html>
